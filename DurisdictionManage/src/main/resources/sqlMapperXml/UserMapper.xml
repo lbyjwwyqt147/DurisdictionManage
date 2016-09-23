@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.liujunyi.tally.mapper.ICoreUserMapper">
+
+  <!-- 返回用户list列表 -->
+  <resultMap type="pers.liujunyi.tally.entity.TCoreUser" id="userResultMap">
+     <result column="ID" property="id" jdbcType="VARCHAR" />
+     <result column="USER_CODE" property="userCode"  jdbcType="VARCHAR" />
+     <result column="LOGIN_USER" property="loginUser"  jdbcType="VARCHAR" />
+     <result column="LOGIN_PWD" property="loginPwd"  jdbcType="VARCHAR" />
+     <result column="USER_NICKNAME" property="userNickname"  jdbcType="VARCHAR" />
+     <result column="USER_REALNAME" property="userRealname"  jdbcType="VARCHAR" />
+     <result column="USER_ORIGINAL" property="userOriginal"  jdbcType="VARCHAR" />
+     <result column="USER_SEX" property="userSex"  jdbcType="VARCHAR" />
+     <result column="NATIONALITY_ID" property="nationalityId"  jdbcType="VARCHAR" />
+     <result column="USER_BIRTHDAY" property="userBirthday"  jdbcType="VARCHAR" />
+     <result column="ID_TYPE" property="idType"  jdbcType="VARCHAR" />
+     <result column="ID_NUMBER" property="idNumber"  jdbcType="VARCHAR" />
+     <result column="USER_PHONE" property="userPhone"  jdbcType="VARCHAR" />
+     <result column="USER_QQ" property="userQq"  jdbcType="VARCHAR" />
+     <result column="USER_WECHAT" property="userWechat"  jdbcType="VARCHAR" />
+     <result column="USER_PORTRAIT" property="userPortrait"  jdbcType="VARCHAR" />
+     <result column="USER_LEVEL" property="userLevel"  jdbcType="INTEGER" />
+     <result column="USER_TYPE" property="userType"  jdbcType="VARCHAR" />
+     <result column="USER_EMAIL" property="userEmail"  jdbcType="VARCHAR" />
+     <result column="USER_JOB" property="userJob"  jdbcType="VARCHAR" />
+     <result column="USER_PROVINCE" property="userProvince"  jdbcType="VARCHAR" />
+     <result column="USER_CITY" property="userCity"  jdbcType="VARCHAR" />
+     <result column="USER_DISTRICT" property="userDistrict"  jdbcType="VARCHAR" />
+     <result column="USER_ADDR" property="userAddr"  jdbcType="VARCHAR" />
+     <result column="USER_REMARKS" property="userRemarks"  jdbcType="VARCHAR" />
+     <result column="USER_INTEGRAL" property="userIntegral"  jdbcType="FLOAT" />
+     <result column="IS_ACTIVATE" property="isActivate"  jdbcType="VARCHAR" />
+     <result column="DELETE_FLAG" property="deleteFlag"  jdbcType="VARCHAR" />
+     <result column="IS_ADMIN" property="isAdmin"  jdbcType="CHAR" />
+     <result column="CREATE_DATE" property="createDate"  jdbcType="VARCHAR" />
+     <result column="UPDATE_USER" property="updateUser"  jdbcType="VARCHAR" />
+     <result column="UPDATE_DATE" property="updateDate"  jdbcType="VARCHAR" />
+     <result column="LOGIN_DATE" property="loginDate"  jdbcType="VARCHAR" />
+     <result column="OUT_DATE" property="outDate"  jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 基本字段 -->
+  <sql id="base_column_list">
+     ID,USER_CODE,LOGIN_USER,LOGIN_PWD,USER_NICKNAME,USER_REALNAME,USER_ORIGINAL,
+     USER_SEX,NATIONALITY_ID,USER_BIRTHDAY,ID_TYPE,ID_NUMBER,USER_PHONE,USER_QQ,
+     USER_WECHAT,USER_PORTRAIT,USER_LEVEL,USER_TYPE,USER_EMAIL,USER_JOB,USER_PROVINCE,
+     USER_CITY,USER_DISTRICT,USER_ADDR,USER_REMARKS,USER_INTEGRAL,IS_ACTIVATE,DELETE_FLAG,
+     IS_ADMIN,CREATE_DATE,UPDATE_USER,UPDATE_DATE,OUT_DATE,LOGIN_DATE
+  </sql>
+  
+  <!-- 插入数据 -->
+  <insert id="addUser" parameterType="coreUser">
+     <!-- 生成主键的uuid -->
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')  from dual  
+    </selectKey>  
+    <!-- 插入数据sql-->
+    insert into T_CORE_USER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       <if test="id != null">
+          ID,
+       </if>
+       <if test="userCode != null">
+          USER_CODE,
+       </if>
+       <if test="loginUser != null">
+          LOGIN_USER,
+       </if>
+       <if test="loginPwd != null">
+          LOGIN_PWD,
+       </if>
+       <if test="userNickname != null">
+          USER_NICKNAME,
+       </if>
+       <if test="userRealname != null">
+          USER_REALNAME,
+       </if>
+       <if test="userOriginal != null">
+          USER_ORIGINAL,
+       </if>
+       <if test="userSex != null">
+          USER_SEX,
+       </if>
+       <if test="nationalityId != null">
+          NATIONALITY_ID,
+       </if>
+       <if test="userBirthday != null">
+          USER_BIRTHDAY,
+       </if>
+       <if test="idType != null">
+          ID_TYPE,
+       </if>
+       <if test="idNumber != null">
+          ID_NUMBER,
+       </if>
+       <if test="userPhone != null">
+          USER_PHONE,
+       </if>
+       <if test="userQq != null">
+          USER_QQ,
+       </if>
+       <if test="userWechat != null">
+          USER_WECHAT,
+       </if>
+       <if test="userPortrait != null">
+          USER_PORTRAIT,
+       </if>
+       <if test="userLevel != null">
+          USER_LEVEL,
+       </if>
+       <if test="userType != null">
+          USER_TYPE,
+       </if>
+       <if test="userEmail != null">
+          USER_EMAIL,
+       </if>
+       <if test="userJob != null">
+          USER_JOB,
+       </if>
+       <if test="userProvince != null">
+          USER_PROVINCE,
+       </if>
+       <if test="userCity != null">
+          USER_CITY,
+       </if>
+       <if test="userDistrict != null">
+          USER_DISTRICT,
+       </if>
+       <if test="userAddr != null">
+          USER_ADDR,
+       </if>
+       <if test="userRemarks != null">
+          USER_REMARKS,
+       </if>
+       <if test="userIntegral != null">
+          USER_INTEGRAL,
+       </if>
+       <if test="isActivate != null">
+          IS_ACTIVATE,
+       </if>
+       <if test="deleteFlag != null">
+          DELETE_FLAG,
+       </if>
+       <if test="isAdmin != null">
+          IS_ADMIN,
+       </if>
+       <if test="createDate != null">
+          CREATE_DATE,
+       </if>
+       <if test="updateUser != null">
+          UPDATE_USER,
+       </if>
+       <if test="updateDate != null">
+          UPDATE_DATE,
+       </if>
+       <if test="loginDate != null">
+          LOGIN_DATE,
+       </if>
+       <if test="outDate != null">
+          OUT_DATE,
+       </if>
+    </trim>
+     <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="id != null">
+          #{id,jdbcType=VARCHAR},
+       </if>
+       <if test="userCode != null">
+          #{userCode,jdbcType=VARCHAR},
+       </if>
+       <if test="loginUser != null">
+           #{loginUser,jdbcType=VARCHAR},
+       </if>
+       <if test="loginPwd != null">
+           #{loginPwd,jdbcType=VARCHAR},
+       </if>
+       <if test="userNickname != null">
+         #{userNickname,jdbcType=VARCHAR},
+       </if>
+       <if test="userRealname != null">
+          #{userRealname,jdbcType=VARCHAR},
+       </if>
+       <if test="userOriginal != null">
+          #{userOriginal,jdbcType=VARCHAR},
+       </if>
+       <if test="userSex != null">
+          #{userSex,jdbcType=VARCHAR},
+       </if>
+       <if test="nationalityId != null">
+          #{nationalityId,jdbcType=VARCHAR},
+       </if>
+       <if test="userBirthday != null">
+          #{userBirthday,jdbcType=VARCHAR},
+       </if>
+       <if test="idType != null">
+          #{idType,jdbcType=VARCHAR},
+       </if>
+       <if test="idNumber != null">
+           #{idNumber,jdbcType=VARCHAR},
+       </if>
+       <if test="userPhone != null">
+          #{userPhone,jdbcType=VARCHAR},
+       </if>
+       <if test="userQq != null">
+          #{userQq,jdbcType=VARCHAR},
+       </if>
+       <if test="userWechat != null">
+          #{userWechat,jdbcType=VARCHAR},
+       </if>
+       <if test="userPortrait != null">
+          #{userPortrait,jdbcType=VARCHAR},
+       </if>
+       <if test="userLevel != null">
+          #{userLevel,jdbcType=INTEGER},
+       </if>
+       <if test="userType != null">
+           #{userType,jdbcType=VARCHAR},
+       </if>
+       <if test="userEmail != null">
+          #{userEmail,jdbcType=VARCHAR},
+       </if>
+       <if test="userJob != null">
+          #{userJob,jdbcType=VARCHAR},
+       </if>
+       <if test="userProvince != null">
+          #{userProvince,jdbcType=VARCHAR},
+       </if>
+       <if test="userCity != null">
+          #{userCity,jdbcType=VARCHAR},
+       </if>
+       <if test="userDistrict != null">
+          #{userDistrict,jdbcType=VARCHAR},
+       </if>
+       <if test="userAddr != null">
+          #{userAddr,jdbcType=VARCHAR},
+       </if>
+       <if test="userRemarks != null">
+          #{userRemarks,jdbcType=VARCHAR},
+       </if>
+       <if test="userIntegral != null">
+          #{userIntegral,jdbcType=FLOAT},
+       </if>
+       <if test="isActivate != null">
+          #{userIntegral,jdbcType=VARCHAR},
+       </if>
+       <if test="deleteFlag != null">
+          #{deleteFlag,jdbcType=VARCHAR},
+       </if>
+       <if test="isAdmin != null">
+          #{isAdmin,jdbcType=VARCHAR},
+       </if>
+       <if test="createDate != null">
+          #{createDate,jdbcType=VARCHAR},
+       </if>
+       <if test="updateUser != null">
+          #{updateUser,jdbcType=VARCHAR},
+       </if>
+       <if test="updateDate != null">
+          #{updateDate,jdbcType=VARCHAR},
+       </if>
+       <if test="loginDate != null">
+          #{loginDate,jdbcType=VARCHAR},
+       </if>
+       <if test="outDate != null">
+          #{outDate,jdbcType=VARCHAR},
+       </if>
+     </trim>
+  </insert>
+  
+  <!-- 根据 登录名、手机号、邮箱 查询用户主键ID -->
+  <select id="getSingleUserId" resultType="java.lang.String" parameterType="java.util.concurrent.ConcurrentMap">
+      select ID from T_CORE_USER
+      <where>
+         <if test="loginUser != null and loginUser != '' ">
+            LOGIN_USER = #{loginUser,jdbcType=VARCHAR}
+         </if>
+         <if test="userEmail != null and userEmail != '' ">
+            USER_EMAIL = #{userEmail,jdbcType=VARCHAR}
+         </if>
+         <if test="userPhone != null and userEmail != '' ">
+            USER_PHONE = #{userPhone,jdbcType=VARCHAR}
+         </if>
+         <if test="idNumber != null and idNumber != '' ">
+            ID_NUMBER = #{idNumber,jdbcType=VARCHAR}
+         </if>
+      </where>
+      and DELETE_FLAG = '1001'
+  </select>
+  
+  <!-- 根据登录名和登录密码查询用户信息 -->
+  <select id="getSingleUserInfo" resultType="CoreUser">
+     select ID,USER_CODE,IS_ACTIVATE from T_CORE_USER  where
+     LOGIN_USER = #{loginUser,jdbcType=VARCHAR} and 
+     LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR} and
+     DELETE_FLAG = '1001'
+  </select>
+  
+</mapper>
