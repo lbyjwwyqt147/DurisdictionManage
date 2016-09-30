@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.liujunyi.tally.mapper.IAttachmentMapper">
+   
+  <!-- 返回用户list列表 -->  
+  <resultMap id="BaseResultMap" type="pers.liujunyi.tally.entity.TCoreAttachment" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ATTACH_CODE" property="attachCode" jdbcType="VARCHAR" />
+    <result column="ATTACH_PARENT" property="attachParent" jdbcType="VARCHAR" />
+    <result column="ATTACH_LEVEL" property="attachLevel" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="PROJECT_ID" property="projectId" jdbcType="VARCHAR" />
+    <result column="ITEM_ID" property="itemId" jdbcType="VARCHAR" />
+    <result column="BID" property="bid" jdbcType="VARCHAR" />
+    <result column="ATTACH_ORIGINAL_NAME" property="attachOriginalName" jdbcType="VARCHAR" />
+    <result column="ATTACH_NEW_NAME" property="attachNewName" jdbcType="VARCHAR" />
+    <result column="ATTACH_RELATIVE_PATHS" property="attachRelativePaths" jdbcType="VARCHAR" />
+    <result column="ABSOLUTE_PATH" property="absolutePath" jdbcType="VARCHAR" />
+    <result column="VOICE_URL" property="voiceUrl" jdbcType="VARCHAR" />
+    <result column="VOICE_LENGTH" property="voiceLength" jdbcType="REAL" />
+    <result column="ATTACH_SIZE" property="attachSize" jdbcType="REAL" />
+    <result column="ATTACH_SUFFIX" property="attachSuffix" jdbcType="CHAR" />
+    <result column="ATTACH_TYPE" property="attachType" jdbcType="CHAR" />
+    <result column="ATTACH_DATA" property="attachData" jdbcType="LONGVARBINARY" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 基础信息项 -->
+  <sql id="Base_Column_List" >
+    ID, ATTACH_CODE,ATTACH_PARENT,ATTACH_LEVEL,USER_ID, PROJECT_ID, ITEM_ID, BID, ATTACH_ORIGINAL_NAME, ATTACH_NEW_NAME, ATTACH_RELATIVE_PATHS, 
+    ABSOLUTE_PATH, ATTACH_SIZE, ATTACH_SUFFIX, ATTACH_TYPE,ATTACH_DATA,VOICE_URL,VOICE_LENGTH,CREATE_DATE
+  </sql>
+  
+   <!-- 插入单挑数据 -->
+   <insert id="addAttachment" parameterType="CoreAttachment" >
+   <!-- 生成主键的uuid -->
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">  
+        select  replace(uuid(),'-','')  from dual  
+    </selectKey>  
+    <!-- 插入数据sql-->
+    insert into t_core_attachment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="attachCode != null" >
+        ATTACH_CODE,
+      </if>
+      <if test="attachParent != null" >
+        ATTACH_PARENT,
+      </if>
+      <if test="attachLevel != null" >
+        ATTACH_LEVEL,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="projectId != null" >
+        PROJECT_ID,
+      </if>
+      <if test="itemId != null" >
+        ITEM_ID,
+      </if>
+      <if test="bid != null" >
+        BID,
+      </if>
+      <if test="attachOriginalName != null" >
+        ATTACH_ORIGINAL_NAME,
+      </if>
+      <if test="attachNewName != null" >
+        ATTACH_NEW_NAME,
+      </if>
+      <if test="attachRelativePaths != null" >
+        ATTACH_RELATIVE_PATHS,
+      </if>
+      <if test="absolutePath != null" >
+        ABSOLUTE_PATH,
+      </if>
+      <if test="attachSize != null" >
+        ATTACH_SIZE,
+      </if>
+      <if test="attachSuffix != null" >
+        ATTACH_SUFFIX,
+      </if>
+      <if test="attachType != null" >
+        ATTACH_TYPE,
+      </if>
+      <if test="attachData != null" >
+        ATTACH_DATA,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="attachCode != null" >
+	    #{attachCode,jdbcType=VARCHAR},
+      </if>
+      <if test="attachParent != null" >
+        #{attachParent,jdbcType=VARCHAR},
+      </if>
+      <if test="attachLevel != null" >
+        #{attachLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null" >
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=VARCHAR},
+      </if>
+      <if test="attachOriginalName != null" >
+        #{attachOriginalName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachNewName != null" >
+        #{attachNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachRelativePaths != null" >
+        #{attachRelativePaths,jdbcType=VARCHAR},
+      </if>
+      <if test="absolutePath != null" >
+        #{absolutePath,jdbcType=VARCHAR},
+      </if>
+      <if test="attachSize != null" >
+        #{attachSize,jdbcType=FLOAT},
+      </if>
+      <if test="attachSuffix != null" >
+        #{attachSuffix,jdbcType=CHAR},
+      </if>
+      <if test="attachType != null" >
+        #{attachType,jdbcType=CHAR},
+      </if>
+      <if test="attachData != null" >
+        #{attachData,jdbcType=LONGVARBINARY},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+
+  </insert>
+
+  <!-- 批量插入附件信息 -->
+  <insert id="addAttachmentList" parameterType="CoreAttachment" >
+  
+	  insert into t_core_attachment (ID, ATTACH_CODE, ATTACH_PARENT, 
+	      ATTACH_LEVEL, USER_ID, PROJECT_ID, 
+	      ITEM_ID, BID, ATTACH_ORIGINAL_NAME, 
+	      ATTACH_NEW_NAME, ATTACH_RELATIVE_PATHS, ABSOLUTE_PATH, 
+	      ATTACH_SIZE, ATTACH_SUFFIX, ATTACH_TYPE, 
+	      ATTACH_DATA,CREATE_DATE)
+	    values
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	      (#{item.id,jdbcType=VARCHAR}, #{item.attachCode,jdbcType=VARCHAR}, #{item.attachParent,jdbcType=VARCHAR}, 
+	      #{item.attachLevel,jdbcType=INTEGER}, #{item.userId,jdbcType=VARCHAR}, #{item.projectId,jdbcType=VARCHAR}, 
+	      #{item.itemId,jdbcType=VARCHAR}, #{item.bid,jdbcType=VARCHAR}, #{item.attachOriginalName,jdbcType=VARCHAR}, 
+	      #{item.attachNewName,jdbcType=VARCHAR}, #{item.attachRelativePaths,jdbcType=VARCHAR}, #{item.absolutePath,jdbcType=VARCHAR}, 
+	      #{item.attachSize,jdbcType=REAL}, #{item.attachSuffix,jdbcType=CHAR}, #{item.attachType,jdbcType=CHAR}, 
+	      #{item.attachData,jdbcType=LONGVARBINARY},#{item.createDate,jdbcType=VARCHAR})
+	   </foreach>
+ </insert>
+ 
+ <!-- 更新附件语音地址 -->
+ <update id="updateAttachmentVoiceUrl">
+    update  t_core_attachment set VOICE_URL = #{voiceUrl,jdbcType=VARCHAR}, VOICE_LENGTH = #{voiceLength,jdbcType=REAL} where ID = #{id,jdbcType=VARCHAR}
+ </update>   
+ 
+ <!-- 查询附件集合 -->
+ <select id="findAttachmentList" resultMap="BaseResultMap">
+   
+   select 
+   <include refid="Base_Column_List"></include>
+   from t_core_attachment where 1 = 1
+   <if test="bid != null and bid != '' ">
+     and BID = #{bid,jdbcType=VARCHAR}
+   </if>
+   <if test="attachParent != null and attachParent != '' ">
+     and ATTACH_PARENT = #{attachParent,jdbcType=VARCHAR}
+   </if>
+ </select>
+ 
+ 
+</mapper>

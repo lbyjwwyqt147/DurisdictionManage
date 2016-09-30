@@ -54,7 +54,7 @@
      <!-- 配置从表 只读数据源 -->
 	<bean id="slaveDataSource" parent="baseDataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="url" value="${slave.jdbc.url}" />
+		<property name="url" value="${master.jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
 	</bean>

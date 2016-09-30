@@ -5,10 +5,12 @@
     <!-- 实体类别名配置 -->  
     <typeAliases>
        <typeAlias type="pers.liujunyi.tally.entity.TCoreUser" alias="CoreUser"/>
+       <typeAlias type="pers.liujunyi.tally.entity.TCoreAttachment" alias="CoreAttachment"/>
     </typeAliases>
     
     <!-- mapper 文件路径配置 -->  
     <mappers>  
         <mapper resource="sqlMapperXml/UserMapper.xml" />  
+        <mapper resource="sqlMapperXml/AttachmentMapper.xml" />  
     </mappers>  
 </configuration>  

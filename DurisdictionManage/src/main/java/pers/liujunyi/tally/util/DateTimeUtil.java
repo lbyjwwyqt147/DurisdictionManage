@@ -28,6 +28,8 @@ public class DateTimeUtil {
 	private static final String yyyyMMdd = "yyyy-MM-dd";
 	/* 输出格式为2016.09.18 */
 	public static final String YYYYMMDD = "yyyy.MM.dd";
+	/* 输出格式为201609181810 */
+	public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 	/* 输出格式为2016年09月18日 */
 	public static final String CHINESEYYYYMMdd = "yyyy年MM月dd日";
 	

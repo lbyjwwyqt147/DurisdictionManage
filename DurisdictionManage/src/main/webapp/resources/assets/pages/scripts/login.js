@@ -46,6 +46,7 @@ var Login = function() {
          	      type : "post",
          	      success : function(data, textStatus){
          	         console.log(data);
+         	         window.location.href="tally/attachment/initUpload";
          	      }
 
          	   });

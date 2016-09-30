@@ -17,4 +17,12 @@ public class Constants {
 	public static final String ADD = "add";
 	/* 表示编辑数据 */
 	public static final String EDIT = "edit";
+	/* 上传PPT */
+	public static final String PPT_FILE = "PPT";
+	/* 上传PPT转为图片 */
+	public static final String PPT_IAMGE_FILE = "PPTTOIMAGE";
+	/* 上传文件存放位置 */
+	public static final String SAVE_FILE_PATH = "/resources/upload";
+	/* 系统接口访问IP地址 */
+	public static final String ITEM_FILE_IP = "http://192.168.0.132:8080/DurisdictionManage";
 }
