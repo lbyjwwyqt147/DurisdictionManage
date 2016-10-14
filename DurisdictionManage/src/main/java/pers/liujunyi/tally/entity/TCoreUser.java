@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreUser entity.
  * @Description 用户表
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_USER")
+@Table(name="t_core_user")
 public class TCoreUser implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -50,6 +50,8 @@ public class TCoreUser implements Serializable {
 	private String userQq;
 	/*微信号码*/
 	private String userWechat;
+	/*微博*/
+	private String weibo;
 	/*用户头像*/
 	private String userPortrait;
 	/*用户等级*/
@@ -88,20 +90,31 @@ public class TCoreUser implements Serializable {
 	private String loginDate;
 	/*最后退出时间*/
 	private String outDate;
+	/*是否在线*/
+	private String isOnline;
+	/*版本号*/
+	private Integer version;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TCoreUser(){}
 
 	/** full constructor */
-	/**主键ID,用户编号,登录账户,登录密码,用户昵称,用户真实姓名,用户外文名,性别,名族,出生日期,证件类型,证件号码,手机号码,QQ号码,微信号码,用户头像,用户等级,用户类型,用户邮箱,用户职业,所在省份,所在城市,所在区县,详细地址,个人说明,积分,是否激活,删除标志,是否是超级管理员,注册时间,修改者,修改时间,最后登录时间,最后退出时间**/
+	/**主键ID,用户编号,登录账户,登录密码,用户昵称,用户真实姓名,用户外文名,性别,名族,出生日期,证件类型,证件号码,手机号码,QQ号码,微信号码,微博,用户头像,用户等级,用户类型,用户邮箱,用户职业,所在省份,所在城市,所在区县,详细地址,个人说明,积分,是否激活,删除标志,是否是超级管理员,注册时间,修改者,修改时间,最后登录时间,最后退出时间,是否在线,版本号,属性1,属性2,属性3**/
 	public TCoreUser(String id,String userCode,String loginUser,String loginPwd,String userNickname,String userRealname,
 		String userOriginal,String userSex,String nationalityId,String userBirthday,String idType,
-		String idNumber,String userPhone,String userQq,String userWechat,String userPortrait,
-		Integer userLevel,String userType,String userEmail,String userJob,String userProvince,
-		String userCity,String userDistrict,String userAddr,String userRemarks,float userIntegral,
-		String isActivate,String deleteFlag,String isAdmin,String createDate,String updateUser,
-		String updateDate,String loginDate,String outDate){
+		String idNumber,String userPhone,String userQq,String userWechat,String weibo,
+		String userPortrait,Integer userLevel,String userType,String userEmail,String userJob,
+		String userProvince,String userCity,String userDistrict,String userAddr,String userRemarks,
+		float userIntegral,String isActivate,String deleteFlag,String isAdmin,String createDate,
+		String updateUser,String updateDate,String loginDate,String outDate,String isOnline,
+		Integer version,String attributeOne,String attributeTwo,String attributeThree){
 		super();
 		this.id = id;
 		this.userCode = userCode;
@@ -118,6 +131,7 @@ public class TCoreUser implements Serializable {
 		this.userPhone = userPhone;
 		this.userQq = userQq;
 		this.userWechat = userWechat;
+		this.weibo = weibo;
 		this.userPortrait = userPortrait;
 		this.userLevel = userLevel;
 		this.userType = userType;
@@ -137,6 +151,11 @@ public class TCoreUser implements Serializable {
 		this.updateDate = updateDate;
 		this.loginDate = loginDate;
 		this.outDate = outDate;
+		this.isOnline = isOnline;
+		this.version = version;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -275,8 +294,17 @@ public class TCoreUser implements Serializable {
 		this.userWechat = userWechat != null ? userWechat.trim() : userWechat;
 	}
 
+	/** weibo get、set方法**/
+	@Column(name = "WEIBO", length = 255, nullable = true)
+	public String getWeibo(){
+		return weibo;
+	}
+	public void setWeibo(String weibo){
+		this.weibo = weibo != null ? weibo.trim() : weibo;
+	}
+
 	/** userPortrait get、set方法**/
-	@Column(name = "USER_PORTRAIT", length = 200, nullable = true)
+	@Column(name = "USER_PORTRAIT", length = 255, nullable = true)
 	public String getUserPortrait(){
 		return userPortrait;
 	}
@@ -444,6 +472,51 @@ public class TCoreUser implements Serializable {
 	}
 	public void setOutDate(String outDate){
 		this.outDate = outDate != null ? outDate.trim() : outDate;
+	}
+
+	/** isOnline get、set方法**/
+	@Column(name = "IS_ONLINE", length = 4, nullable = true)
+	public String getIsOnline(){
+		return isOnline;
+	}
+	public void setIsOnline(String isOnline){
+		this.isOnline = isOnline != null ? isOnline.trim() : isOnline;
+	}
+
+	/** version get、set方法**/
+	@Column(name = "VERSION", nullable = true)
+	public Integer getVersion(){
+		return version;
+	}
+	public void setVersion(Integer version){
+		this.version = version;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 32, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 50, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 100, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

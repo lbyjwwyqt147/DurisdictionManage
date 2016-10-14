@@ -213,7 +213,7 @@ var FormValidation = function () {
                         required: true
                     },
                     occupation: {
-                        minlength: 5,
+                        minlength: 5
                     },
                     membership: {
                         required: true

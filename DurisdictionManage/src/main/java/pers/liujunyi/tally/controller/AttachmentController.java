@@ -20,7 +20,7 @@ import pers.liujunyi.tally.entity.TCoreAttachment;
 import pers.liujunyi.tally.service.IAttachmentService;
 import pers.liujunyi.tally.util.AttachmentFileUtil;
 import pers.liujunyi.tally.util.Constants;
-import pers.liujunyi.tally.util.ControllerUitl;
+import pers.liujunyi.tally.util.ControllerUtil;
 import pers.liujunyi.tally.util.DateTimeUtil;
 
 @Controller
@@ -32,7 +32,7 @@ public class AttachmentController {
 	
 	@RequestMapping(value="initUpload")
 	public ModelAndView initUpload(HttpServletRequest request,HttpServletResponse response){
-		return new ModelAndView("user/upload");
+		return new ModelAndView("business/user/ppt_upload");
 	}
 	
 	
@@ -48,7 +48,7 @@ public class AttachmentController {
 			//获取upload文件夹得真实路径  
 		    String realpath = request.getSession().getServletContext().getRealPath(Constants.SAVE_FILE_PATH); 
 		    ConcurrentMap<String, Object> resultMap =  AttachmentFileUtil.uploadFile(request, realpath,null);
-		    ControllerUitl.writeJavaScript(response, resultMap);
+		    ControllerUtil.writeJavaScript(response, resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,7 +91,7 @@ public class AttachmentController {
 		}
 		resultMap.put("success", success.get());
 		resultMap.put("message", messageString);
-		ControllerUitl.writeJavaScript(response, resultMap);
+		ControllerUtil.writeJavaScript(response, resultMap);
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class AttachmentController {
 		AtomicBoolean success =  new AtomicBoolean(false);
 		String messageString = "上传语音文件失败.";
 		try {
-			ConcurrentMap<String, Object> paramsMap = ControllerUitl.getFormData(request);
+			ConcurrentMap<String, Object> paramsMap = ControllerUtil.getFormData(request);
 			//图片ID
 			String imageId = paramsMap.get("imageId").toString().trim();
 			//语音时长
@@ -136,7 +136,7 @@ public class AttachmentController {
 		}
 		resultMap.put("success", success.get());
 		resultMap.put("message", messageString);
-		ControllerUitl.writeJavaScript(response, resultMap);
+		ControllerUtil.writeJavaScript(response, resultMap);
 	}
 	
 	
@@ -152,7 +152,7 @@ public class AttachmentController {
 		AtomicBoolean success =  new AtomicBoolean(false);
 		String messageString = "查询数据失败.";
 		try {
-			ConcurrentMap<String, Object> paramsMap = ControllerUitl.getFormData(request);
+			ConcurrentMap<String, Object> paramsMap = ControllerUtil.getFormData(request);
 			CopyOnWriteArrayList<TCoreAttachment> list = attachmentService.findAttachmentList(paramsMap);
 			if(!list.isEmpty()){
 				messageString = "查询数据成功.";
@@ -166,7 +166,7 @@ public class AttachmentController {
 		}
 		resultMap.put("success", success.get());
 		resultMap.put("message", messageString);
-		ControllerUitl.writeJavaScript(response, resultMap);
+		ControllerUtil.writeJavaScript(response, resultMap);
 	}
 
 }

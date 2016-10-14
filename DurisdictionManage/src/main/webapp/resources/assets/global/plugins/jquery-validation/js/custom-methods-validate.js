@@ -11,3 +11,35 @@ jQuery.validator.addMethod("loginAccount", function(value, element, params) {
 jQuery.validator.addMethod("userName", function(value, element, params) {
 		return this.optional(element) || /^[A-Za-z0-9_\u554A-\u9C52]+$/.test(value);
 	}, "该字段值由汉字、字母、数字、下划线组成.");
+
+	
+/**
+ * 手机号码验证     
+ */
+jQuery.validator.addMethod("isMobile", function(value, element) {       
+         var length = value.length;   
+         var mobile = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,1,6,7,8]))\d{8}$/;   
+         return this.optional(element) || (length == 11 && mobile.test(value));     
+    }, "手机格式不正确.");   	
+
+/**
+ * 只能输入字母或者数字
+ */
+jQuery.validator.addMethod("numberLetter", function(value, element, params) {
+		return this.optional(element) || /^[A-Za-z0-9]+$/.test(value);
+	}, "该字段值只能输入字母或者数字.");
+
+/**
+ * 只能输入中文、字母或者数字
+ */
+jQuery.validator.addMethod("chineseNumber", function(value, element, params) {
+		return this.optional(element) || /^[a-zA-Z\u4e00-\u9fa5][a-zA-Z0-9\u4e00-\u9fa5]*$/.test(value);
+	}, "该字段值只能输入中文、字母或者数字.");
+
+/**
+ * 只能输入字母
+ */
+jQuery.validator.addMethod("letter", function(value, element, params) {
+		return this.optional(element) || /^[A-Za-z]+$/.test(value);
+	}, "该字段值只能输入字母.");
+	

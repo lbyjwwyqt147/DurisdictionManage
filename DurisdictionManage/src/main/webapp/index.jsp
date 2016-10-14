@@ -103,8 +103,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="button" id="back-btn" class="btn green btn-outline">去登录</button>
-                    <button type="submit" class="btn btn-success uppercase pull-right">提交</button>
+                    <button type="button" id="back-btn" class="btn green btn-outline"><i class="fa fa-arrow-circle-left" style="padding-right: 4px;"></i>登录</button>
+                    <button type="submit" class="btn btn-success uppercase pull-right"><i class="fa fa-arrow-circle-right" style="padding-right: 4px;"></i>提交</button>
                 </div>
             </form>
             <!-- 找回密码表单结束 -->
@@ -177,13 +177,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <div id="register_tnc_error"> </div>
                 </div>
                 <div class="form-actions" style=" margin-top: 0px;  padding-top: 0px;">
-                    <button type="button" id="register-back-btn" class="btn green btn-outline">已有帐号</button>
-                    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right">立即注册</button>
+                    <button type="button" id="register-back-btn" class="btn green btn-outline" ><i class="fa fa-arrow-circle-left" style="padding-right: 4px;"></i>已有帐号</button>
+                    <button type="submit" id="register-submit-btn" class="btn btn-success uppercase pull-right"><i class="fa fa-arrow-circle-right" style="padding-right: 4px;"></i>立即注册</button>
                 </div>
             </form>
             <!-- END REGISTRATION FORM -->
         </div>
-        <div class="copyright"> 2014 © Metronic. Admin Dashboard Template. </div>
+        <div class="copyright"> 2016. </div>
         
     <jsp:include page="/WEB-INF/pages/commons/bottom.jsp"></jsp:include>
     <script type="text/javascript" src="<%=basePath %>resources/assets/pages/scripts/login.js"></script>

@@ -17,12 +17,18 @@ public class Constants {
 	public static final String ADD = "add";
 	/* 表示编辑数据 */
 	public static final String EDIT = "edit";
+	/* 手机发送短信信息 */
+	public static final String SMS = "sms";
+	/* 邮箱发送邮件 */
+	public static final String EMAIL = "email";
 	/* 上传PPT */
 	public static final String PPT_FILE = "PPT";
 	/* 上传PPT转为图片 */
 	public static final String PPT_IAMGE_FILE = "PPTTOIMAGE";
 	/* 上传文件存放位置 */
 	public static final String SAVE_FILE_PATH = "/resources/upload";
+	/* 系统中树形顶级节点编号 */
+	public static final String PAERNT = "1";
 	/* 系统接口访问IP地址 */
 	public static final String ITEM_FILE_IP = "http://192.168.0.132:8080/DurisdictionManage";
 }

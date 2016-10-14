@@ -39,38 +39,58 @@ var Datatable = function() {
                 filterApplyAction: "filter",
                 filterCancelAction: "filter_cancel",
                 resetGroupActionInputOnSuccess: true,
-                loadingMessage: 'Loading...',
+                loadingMessage: '数据加载中...',
                 dataTable: {
-                    "dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>", // datatable layout
-                    "pageLength": 10, // default records per page
-                    "language": { // language settings
+                   "dom": "<'row'<'col-md-12 col-sm-12'pli><'col-md-6 col-sm-12'<'table-group-actions pull-right'>>r><'table-responsive't><'row'<'col-md-12 col-sm-12'pli><'col-md-6 col-sm-12'>>", // datatable layout
+                   "pageLength": 10, // default records per page
+                  /*  "language": { // language settings
                         // metronic spesific
-                        "metronicGroupActions": "_TOTAL_ records selected:  ",
-                        "metronicAjaxRequestGeneralError": "Could not complete request. Please check your internet connection",
+                        "metronicGroupActions": "_TOTAL_ 选中的记录:  ",
+                        "metronicAjaxRequestGeneralError": "无法完成请求。请检查你的网络连接",
 
                         // data tables spesific
-                        "lengthMenu": "<span class='seperator'>|</span>View _MENU_ records",
-                        "info": "<span class='seperator'>|</span>Found total _TOTAL_ records",
-                        "infoEmpty": "No records found to show",
-                        "emptyTable": "No data available in table",
-                        "zeroRecords": "No matching records found",
+                        "lengthMenu": "<span class='seperator'>|</span>每页显示 _MENU_ 条纪录",
+                        "info": "<span class='seperator'>|</span>总共 total _TOTAL_ 条纪录",
+                        "infoEmpty": "没有找到记录",
+                        "emptyTable": "没有数据表",
+                        "zeroRecords": "没有找到匹配的记录",
                         "paginate": {
-                            "previous": "Prev",
-                            "next": "Next",
-                            "last": "Last",
-                            "first": "First",
-                            "page": "Page",
-                            "pageOf": "of"
+                            "previous": "上一页",
+                            "next": "下一页",
+                            "last": "最后页",
+                            "first": "第一页",
+                            "page": "页",
+                            "pageOf": "到"
                         }
-                    },
-
+                    },*/
+                    "language": {
+		                "aria": {
+		                    "sortAscending": ": 以此列升序排序",
+		                    "sortDescending": ": 以此列降序排序"
+		                },
+		                "metronicGroupActions": "_TOTAL_ 选中的记录:  ",
+                        "metronicAjaxRequestGeneralError": "无法完成请求。请检查你的网络连接",
+		                "emptyTable": "没有数据",
+		                "info": "&nbsp;显示第 _START_ 到 _END_ 条记录,总共 _TOTAL_ 条记录",
+		                "infoEmpty": "没有发现记录",
+		                "infoFiltered": "(filtered1 from _MAX_ 条纪录)",
+		                "lengthMenu": "每页显示 _MENU_ 条纪录",
+		                "search": "查询:",
+		                "zeroRecords": "没有找到匹配的记录",
+		                "paginate": {
+		                    "previous":"上一页",
+		                    "next": "下一页",
+		                    "last": "最后一页",
+		                    "first": "第一页"
+		                }
+		            },
                     "orderCellsTop": true,
                     "columnDefs": [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                         'orderable': false,
                         'targets': [0]
                     }],
 
-                    "pagingType": "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
+                    "pagingType": "bootstrap_full_number", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
                     "autoWidth": false, // disable fixed width and enable fluid table
                     "processing": false, // enable/disable display message box on record load
                     "serverSide": true, // enable/disable server side ajax loading
@@ -174,7 +194,7 @@ var Datatable = function() {
             $.fn.dataTableExt.oStdClasses.sLengthSelect = tmp.sLengthSelect;
 
             // get table wrapper
-            tableWrapper = table.parents('.dataTables_wrapper');
+             tableWrapper = table.parents('.dataTables_wrapper');
 
             // build table group actions panel
             if ($('.table-actions-wrapper', tableContainer).size() === 1) {

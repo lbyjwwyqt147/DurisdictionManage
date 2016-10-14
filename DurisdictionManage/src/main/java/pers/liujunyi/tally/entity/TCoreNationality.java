@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreNationality entity.
  * @Description 民族管理
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_NATIONALITY")
+@Table(name="t_core_nationality")
 public class TCoreNationality implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

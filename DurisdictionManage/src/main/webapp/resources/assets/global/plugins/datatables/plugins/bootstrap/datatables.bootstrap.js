@@ -5,8 +5,8 @@ $.extend(true, $.fn.dataTable.defaults, {
     "language": {
         "lengthMenu": " _MENU_ records ",
         "paginate": {
-            "previous": 'Prev',
-            "next": 'Next',
+            "previous": '上一页',
+            "next": '下一页',
             "page": "Page",
             "pageOf": "of"
         }

@@ -35,7 +35,7 @@ import pers.liujunyi.tally.entity.TCoreAttachment;
  */
 public class AttachmentFileUtil {
 	
-	private static final Logger LOGGER = Logger.getLogger(ControllerUitl.class);
+	private static final Logger LOGGER = Logger.getLogger(ControllerUtil.class);
 	
 	/**
 	 * 创建UUID
@@ -260,6 +260,12 @@ public class AttachmentFileUtil {
 								//获取当前项目访问地址
 								attachment.setAbsolutePath(urlPathString+"/" + fileName);
 								attachment.setAttachRelativePaths(path);
+								attachment.setAbsoluteFolderPath(urlPathString);
+								attachment.setIsCover("1002");
+								attachment.setAttachStartus("1001");
+								attachment.setAttributeOne("");
+								attachment.setAttributeTwo("");
+								attachment.setAttributeThree("");
 								attachment.setCreateDate(DateTimeUtil.getCurrentDateTime());
 								attachmentList.add(attachment);
 								if(localFile.exists()){
@@ -286,6 +292,12 @@ public class AttachmentFileUtil {
 											 imageAttachment.setAttachSuffix(".jpeg");
 											 imageAttachment.setAbsolutePath(urlPathString+"/ppttoimage/"+iamgePathString);
 											 imageAttachment.setAttachRelativePaths(imagePath+"\\"+iamgePathString);
+											 imageAttachment.setAbsoluteFolderPath(urlPathString);
+											 imageAttachment.setIsCover("1002");
+											 imageAttachment.setAttachStartus("1001");
+											 imageAttachment.setAttributeOne("");
+											 imageAttachment.setAttributeTwo("");
+											 imageAttachment.setAttributeThree("");
 											 imageAttachment.setCreateDate(DateTimeUtil.getCurrentDateTime());
 											 attachmentImageList.add(imageAttachment);
 										}

@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreModules entity.
  * @Description 资源模块表
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_MODULES")
+@Table(name="t_core_modules")
 public class TCoreModules implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -54,17 +54,23 @@ public class TCoreModules implements Serializable {
 	private String updateUser;
 	/*修改时间*/
 	private String updateDate;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TCoreModules(){}
 
 	/** full constructor */
-	/**模块ID,节点层次,节点状态,模块名称,模块编号,模块类型,模块URL,模块父ID编号,模块图标1,模块图标2,模块描述,是否激活,删除标志,创建者,创建时间,修改者,修改时间**/
+	/**模块ID,节点层次,节点状态,模块名称,模块编号,模块类型,模块URL,模块父ID编号,模块图标1,模块图标2,模块描述,是否激活,删除标志,创建者,创建时间,修改者,修改时间,属性1,属性2,属性3**/
 	public TCoreModules(String id,Integer nodeLevel,String nodeStatus,String moduleName,String moduleCode,String moduleType,
 		String moduleUrl,String modulePid,String moduleIconOne,String moduleIconTwo,String moduleDescription,
 		String isActivate,String deleteFlag,String createUser,String createDate,String updateUser,
-		String updateDate){
+		String updateDate,String attributeOne,String attributeTwo,String attributeThree){
 		super();
 		this.id = id;
 		this.nodeLevel = nodeLevel;
@@ -83,6 +89,9 @@ public class TCoreModules implements Serializable {
 		this.createDate = createDate;
 		this.updateUser = updateUser;
 		this.updateDate = updateDate;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -237,6 +246,33 @@ public class TCoreModules implements Serializable {
 	}
 	public void setUpdateDate(String updateDate){
 		this.updateDate = updateDate != null ? updateDate.trim() : updateDate;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 32, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 50, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 100, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

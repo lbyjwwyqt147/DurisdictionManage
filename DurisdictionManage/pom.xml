@@ -42,6 +42,12 @@
 	    <artifactId>mybatis-spring</artifactId>
 	    <version>1.3.0</version>
 	</dependency>
+	<!-- mybatis分页插件 -->
+	<dependency>
+	    <groupId>com.github.pagehelper</groupId>
+	    <artifactId>pagehelper</artifactId>
+	    <version>4.1.6</version>
+	</dependency>
     <!-- mybatis核心包 结束-->  
     
     
@@ -252,9 +258,15 @@
 	    <version>2.5</version>
 	</dependency>
     <!-- 文件上传包 结束 -->
-
-
-
+   
+    <!-- 邮件发送包 开始 -->
+    <dependency>
+    	<groupId>javax.mail</groupId>
+    	<artifactId>mail</artifactId>
+    	<version>1.4.3</version>
+    </dependency>
+    <!-- 邮件发送包 结束 -->
+    
   </dependencies>
   <build>
     <plugins>

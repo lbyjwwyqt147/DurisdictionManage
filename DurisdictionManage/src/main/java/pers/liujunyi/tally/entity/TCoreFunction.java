@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreFunction entity.
  * @Description 功能表（权限表）
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_FUNCTION")
+@Table(name="t_core_function")
 public class TCoreFunction implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

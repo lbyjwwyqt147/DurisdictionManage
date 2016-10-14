@@ -172,10 +172,10 @@ var $table = $('#table'),
 
     $(function () {
         var scripts = [
-                location.search.substring(1) || 'assets/bootstrap-table/src/bootstrap-table.js',
-                'assets/bootstrap-table/src/extensions/export/bootstrap-table-export.js',
+                location.search.substring(1) || 'resources/assets/global/plugins/bootstrap-table/bootstrap-table.min.js',
+                'resources/assets/global/plugins/bootstrap-table/extensions/export/bootstrap-table-export.js',
                 'http://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js',
-                'assets/bootstrap-table/src/extensions/editable/bootstrap-table-editable.js',
+                'resources/assets/global/plugins/bootstrap-table/extensions/editable/bootstrap-table-editable.js',
                 'http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js'
             ],
             eachSeries = function (arr, iterator, callback) {

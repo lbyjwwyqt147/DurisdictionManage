@@ -119,8 +119,8 @@
     <!-- 自动扫描dao service组件，需要把controller去掉，否则影响事务管理 -->  
     <context:component-scan base-package="pers.liujunyi.tally">
         <context:exclude-filter type="regex"  expression="pers.liujunyi.tally.controller" />
-        <context:exclude-filter type="regex"  expression="pers.liujunyi.tally.util" />
-    </context:component-scan>  
+        <!--  <context:exclude-filter type="regex"  expression="pers.liujunyi.tally.util" />  --> 
+   </context:component-scan>  
    
     <!-- 配置切面 -->
     <aop:config>

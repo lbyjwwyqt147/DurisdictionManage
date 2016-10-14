@@ -46,7 +46,7 @@ var Login = function() {
          	      type : "post",
          	      success : function(data, textStatus){
          	         console.log(data);
-         	         window.location.href="tally/attachment/initUpload";
+         	         window.location.href="tally/home/initHome";
          	      }
 
          	   });
@@ -75,7 +75,7 @@ var Login = function() {
 	         $("#login-btn").click(function(e){
 	             handleLogin.userLogin();
 	         }) 
-	         
+	         //底部版本信息内容
 	         commonUtil.pageMsgUitl.setPageBottomMsg("copyright");
          }
          

@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TMyAddress entity.
  * @Description 我的地址
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_MY_ADDRESS")
+@Table(name="t_my_address")
 public class TMyAddress implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -58,17 +58,24 @@ public class TMyAddress implements Serializable {
 	private String updateUser;
 	/*修改时间*/
 	private String updateDate;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TMyAddress(){}
 
 	/** full constructor */
-	/**主键ID,用户ID,联系人,联系人电话,备用联系人,备用联系人电话,所在省份,所在城市,所在区县,详细地址,邮编,是否默认地址,是否激活,删除标志,备注,创建人,创建时间,修改者,修改时间**/
+	/**主键ID,用户ID,联系人,联系人电话,备用联系人,备用联系人电话,所在省份,所在城市,所在区县,详细地址,邮编,是否默认地址,是否激活,删除标志,备注,创建人,创建时间,修改者,修改时间,属性1,属性2,属性3**/
 	public TMyAddress(String id,String userId,String userLinkman,String linkmanPhone,String userResLinkman,String linkmanResPhone2,
 		String userProvince,String userCity,String userDistrict,String userAddr,String zipCode,
 		String isDefault,String isActivate,String deleteFlag,String remarks,String createUser,
-		String createDate,String updateUser,String updateDate){
+		String createDate,String updateUser,String updateDate,String attributeOne,String attributeTwo,
+		String attributeThree){
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -89,6 +96,9 @@ public class TMyAddress implements Serializable {
 		this.createDate = createDate;
 		this.updateUser = updateUser;
 		this.updateDate = updateDate;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -261,6 +271,33 @@ public class TMyAddress implements Serializable {
 	}
 	public void setUpdateDate(String updateDate){
 		this.updateDate = updateDate != null ? updateDate.trim() : updateDate;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 32, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 50, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 100, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

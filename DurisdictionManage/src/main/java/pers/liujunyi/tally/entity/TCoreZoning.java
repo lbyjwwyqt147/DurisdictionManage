@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreZoning entity.
  * @Description 区划管理
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_ZONING")
+@Table(name="t_core_zoning")
 public class TCoreZoning implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class TCoreZoning implements Serializable {
 	/*父ID*/
 	private String parentId;
 	/*区划名称*/
-	private String name;
+	private String zoningName;
 	/*简称*/
 	private String shortName;
 	/*经度*/
@@ -35,9 +35,9 @@ public class TCoreZoning implements Serializable {
 	/*纬度*/
 	private float latitudelatitude;
 	/*区划等级*/
-	private Integer level;
+	private Integer zoningLevel;
 	/*顺序*/
-	private Integer sort;
+	private Integer zoningSort;
 	/*状态*/
 	private Integer status;
 	/*邮编*/
@@ -49,18 +49,18 @@ public class TCoreZoning implements Serializable {
 
 	/** full constructor */
 	/**主键ID,区划代码,父ID,区划名称,简称,经度,纬度,区划等级,顺序,状态,邮编**/
-	public TCoreZoning(String id,String zoningCode,String parentId,String name,String shortName,float longitude,
-		float latitudelatitude,Integer level,Integer sort,Integer status,Integer postCode){
+	public TCoreZoning(String id,String zoningCode,String parentId,String zoningName,String shortName,float longitude,
+		float latitudelatitude,Integer zoningLevel,Integer zoningSort,Integer status,Integer postCode){
 		super();
 		this.id = id;
 		this.zoningCode = zoningCode;
 		this.parentId = parentId;
-		this.name = name;
+		this.zoningName = zoningName;
 		this.shortName = shortName;
 		this.longitude = longitude;
 		this.latitudelatitude = latitudelatitude;
-		this.level = level;
-		this.sort = sort;
+		this.zoningLevel = zoningLevel;
+		this.zoningSort = zoningSort;
 		this.status = status;
 		this.postCode = postCode;
 	}
@@ -93,13 +93,13 @@ public class TCoreZoning implements Serializable {
 		this.parentId = parentId != null ? parentId.trim() : parentId;
 	}
 
-	/** name get、set方法**/
-	@Column(name = "NAME", length = 50, nullable = true)
-	public String getName(){
-		return name;
+	/** zoningName get、set方法**/
+	@Column(name = "ZONING_NAME", length = 50, nullable = true)
+	public String getZoningName(){
+		return zoningName;
 	}
-	public void setName(String name){
-		this.name = name != null ? name.trim() : name;
+	public void setZoningName(String zoningName){
+		this.zoningName = zoningName != null ? zoningName.trim() : zoningName;
 	}
 
 	/** shortName get、set方法**/
@@ -129,22 +129,22 @@ public class TCoreZoning implements Serializable {
 		this.latitudelatitude = latitudelatitude;
 	}
 
-	/** level get、set方法**/
-	@Column(name = "LEVEL", nullable = true)
-	public Integer getLevel(){
-		return level;
+	/** zoningLevel get、set方法**/
+	@Column(name = "ZONING_LEVEL", nullable = true)
+	public Integer getZoningLevel(){
+		return zoningLevel;
 	}
-	public void setLevel(Integer level){
-		this.level = level;
+	public void setZoningLevel(Integer zoningLevel){
+		this.zoningLevel = zoningLevel;
 	}
 
-	/** sort get、set方法**/
-	@Column(name = "SORT", nullable = true)
-	public Integer getSort(){
-		return sort;
+	/** zoningSort get、set方法**/
+	@Column(name = "ZONING_SORT", nullable = true)
+	public Integer getZoningSort(){
+		return zoningSort;
 	}
-	public void setSort(Integer sort){
-		this.sort = sort;
+	public void setZoningSort(Integer zoningSort){
+		this.zoningSort = zoningSort;
 	}
 
 	/** status get、set方法**/

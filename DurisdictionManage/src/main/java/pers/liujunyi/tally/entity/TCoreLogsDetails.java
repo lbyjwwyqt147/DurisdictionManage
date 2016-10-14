@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreLogsDetails entity.
  * @Description 日志明细表(从表)
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_LOGS_DETAILS")
+@Table(name="t_core_logs_details")
 public class TCoreLogsDetails implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -32,14 +32,21 @@ public class TCoreLogsDetails implements Serializable {
 	private String oldContent;
 	/*新值*/
 	private String newContent;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TCoreLogsDetails(){}
 
 	/** full constructor */
-	/**主键ID,日志ID,被修改字段,字段描述,旧值,新值**/
-	public TCoreLogsDetails(String id,String logsId,String modificationFeild,String feildDescribe,String oldContent,String newContent){
+	/**主键ID,日志ID,被修改字段,字段描述,旧值,新值,属性1,属性2,属性3**/
+	public TCoreLogsDetails(String id,String logsId,String modificationFeild,String feildDescribe,String oldContent,String newContent,
+		String attributeOne,String attributeTwo,String attributeThree){
 		super();
 		this.id = id;
 		this.logsId = logsId;
@@ -47,6 +54,9 @@ public class TCoreLogsDetails implements Serializable {
 		this.feildDescribe = feildDescribe;
 		this.oldContent = oldContent;
 		this.newContent = newContent;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -69,7 +79,7 @@ public class TCoreLogsDetails implements Serializable {
 	}
 
 	/** modificationFeild get、set方法**/
-	@Column(name = "MODIFICATION_FEILD", length = 20, nullable = true)
+	@Column(name = "MODIFICATION_FEILD", length = 50, nullable = true)
 	public String getModificationFeild(){
 		return modificationFeild;
 	}
@@ -78,7 +88,7 @@ public class TCoreLogsDetails implements Serializable {
 	}
 
 	/** feildDescribe get、set方法**/
-	@Column(name = "FEILD_DESCRIBE", length = 32, nullable = true)
+	@Column(name = "FEILD_DESCRIBE", length = 100, nullable = true)
 	public String getFeildDescribe(){
 		return feildDescribe;
 	}
@@ -102,6 +112,33 @@ public class TCoreLogsDetails implements Serializable {
 	}
 	public void setNewContent(String newContent){
 		this.newContent = newContent != null ? newContent.trim() : newContent;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 32, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 50, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 100, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

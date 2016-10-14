@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreLogs entity.
  * @Description 日志管理(主表)
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_LOGS")
+@Table(name="t_core_logs")
 public class TCoreLogs implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -40,15 +40,22 @@ public class TCoreLogs implements Serializable {
 	private String tableCode;
 	/*表名称*/
 	private String tableName;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TCoreLogs(){}
 
 	/** full constructor */
-	/**主键ID,用户ID,日志内容,所属模块,所作操作,创建日期,日志类型,登录IP,表名代码,表名称**/
+	/**主键ID,用户ID,日志内容,所属模块,所作操作,创建日期,日志类型,登录IP,表名代码,表名称,属性1,属性2,属性3**/
 	public TCoreLogs(String id,String userId,String logContent,String logModule,String logOperation,String createDate,
-		String logType,String loginIp,String tableCode,String tableName){
+		String logType,String loginIp,String tableCode,String tableName,String attributeOne,
+		String attributeTwo,String attributeThree){
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -60,6 +67,9 @@ public class TCoreLogs implements Serializable {
 		this.loginIp = loginIp;
 		this.tableCode = tableCode;
 		this.tableName = tableName;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -136,7 +146,7 @@ public class TCoreLogs implements Serializable {
 	}
 
 	/** tableCode get、set方法**/
-	@Column(name = "TABLE_CODE", length = 20, nullable = true)
+	@Column(name = "TABLE_CODE", length = 50, nullable = true)
 	public String getTableCode(){
 		return tableCode;
 	}
@@ -151,6 +161,33 @@ public class TCoreLogs implements Serializable {
 	}
 	public void setTableName(String tableName){
 		this.tableName = tableName != null ? tableName.trim() : tableName;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 100, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 200, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 300, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

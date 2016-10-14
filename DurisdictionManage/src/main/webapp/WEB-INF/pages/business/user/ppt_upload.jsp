@@ -125,6 +125,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script src="<%=basePath %>/resources/assets/global/plugins/progress-bar-linear/js/stopExecutionOnTimeout.js?t=1" type="text/javascript"></script>
   
   <!-- 附件上传js结束 -->
-  <script src="<%=basePath %>/resources/pages/scripts/user/user_upload_ppt.js" type="text/javascript"></script>
+  <script src="<%=basePath %>/resources/pages/scripts/business/user/user_upload_ppt.js" type="text/javascript"></script>
   </body>
 </html>

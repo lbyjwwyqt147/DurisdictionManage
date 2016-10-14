@@ -21,7 +21,7 @@
 <script src="${pageContext.request.contextPath}/resources/assets/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/pages/scripts/ui-general.min.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/resources/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/layouts/layout/scripts/demo.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <!-- metronic 需要的JS结束  -->
 

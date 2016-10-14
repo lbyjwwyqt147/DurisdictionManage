@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pers.liujunyi.tally.entity.TCoreUser;
 import pers.liujunyi.tally.service.ICoreUserService;
-import pers.liujunyi.tally.util.ControllerUitl;
+import pers.liujunyi.tally.util.ControllerUtil;
 
 /***
  * 文件名称: UserController.java
@@ -41,9 +41,10 @@ public class UserController {
 	 */
 	@RequestMapping(value="/saveUser")
 	public void saveUser(TCoreUser user,String task,HttpServletRequest request,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin","*");
 		try {
 			ConcurrentMap<String, Object> resultMap =  userService.saveUserInfo(user, task.trim());
-			ControllerUitl.writeJavaScript(response, resultMap);
+			ControllerUtil.writeJavaScript(response, resultMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,7 +63,7 @@ public class UserController {
 		String loginJson = "{\"success\":false,\"mssage\":\"登录出现异常.\"}";
 		try {
 			//获取参数信息
-			ConcurrentMap<String,Object> paramMap = ControllerUitl.getFormData(request);
+			ConcurrentMap<String,Object> paramMap = ControllerUtil.getFormData(request);
 			//登录帐号
 			AtomicReference<String> loginUser = new AtomicReference<String>(paramMap.get("login_user").toString());
 			//登录密码
@@ -75,6 +76,6 @@ public class UserController {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		ControllerUitl.writeJsonJavaScript(response, loginJson);
+		ControllerUtil.writeJsonJavaScript(response, loginJson);
 	}
 }

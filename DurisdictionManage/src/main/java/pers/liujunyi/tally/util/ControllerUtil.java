@@ -24,9 +24,9 @@ import com.google.gson.Gson;
  * @version 1.0
  * @author liujunyi
  */
-public class ControllerUitl {
+public class ControllerUtil {
 
-   private static final Logger LOGGER = Logger.getLogger(ControllerUitl.class);
+   private static final Logger LOGGER = Logger.getLogger(ControllerUtil.class);
 
    /**
     * 获取前端提交到后台的参数

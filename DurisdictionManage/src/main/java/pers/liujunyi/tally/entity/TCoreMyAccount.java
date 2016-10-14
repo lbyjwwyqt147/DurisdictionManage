@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreMyAccount entity.
  * @Description 我的帐户（绑定其他账户）
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_MY_ACCOUNT")
+@Table(name="t_core_my_account")
 public class TCoreMyAccount implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -38,15 +38,22 @@ public class TCoreMyAccount implements Serializable {
 	private String deleteFlag;
 	/*创建时间*/
 	private String createDate;
+	/*属性1*/
+	private String attributeOne;
+	/*属性2*/
+	private String attributeTwo;
+	/*属性3*/
+	private String attributeThree;
 
 
 	/**default constructor*/
 	public TCoreMyAccount(){}
 
 	/** full constructor */
-	/**主键ID,用户ID,绑定的账户,账户类型,账户等级,账户积分,是否激活,删除标志,创建时间**/
+	/**主键ID,用户ID,绑定的账户,账户类型,账户等级,账户积分,是否激活,删除标志,创建时间,属性1,属性2,属性3**/
 	public TCoreMyAccount(String id,String userId,String userAccount,String accountType,Integer accountLevel,float accountIntegral,
-		String isActivate,String deleteFlag,String createDate){
+		String isActivate,String deleteFlag,String createDate,String attributeOne,String attributeTwo,
+		String attributeThree){
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -57,6 +64,9 @@ public class TCoreMyAccount implements Serializable {
 		this.isActivate = isActivate;
 		this.deleteFlag = deleteFlag;
 		this.createDate = createDate;
+		this.attributeOne = attributeOne;
+		this.attributeTwo = attributeTwo;
+		this.attributeThree = attributeThree;
 	}
 	
 	/** id get、set方法**/
@@ -139,6 +149,33 @@ public class TCoreMyAccount implements Serializable {
 	}
 	public void setCreateDate(String createDate){
 		this.createDate = createDate != null ? createDate.trim() : createDate;
+	}
+
+	/** attributeOne get、set方法**/
+	@Column(name = "ATTRIBUTE_ONE", length = 32, nullable = true)
+	public String getAttributeOne(){
+		return attributeOne;
+	}
+	public void setAttributeOne(String attributeOne){
+		this.attributeOne = attributeOne != null ? attributeOne.trim() : attributeOne;
+	}
+
+	/** attributeTwo get、set方法**/
+	@Column(name = "ATTRIBUTE_TWO", length = 50, nullable = true)
+	public String getAttributeTwo(){
+		return attributeTwo;
+	}
+	public void setAttributeTwo(String attributeTwo){
+		this.attributeTwo = attributeTwo != null ? attributeTwo.trim() : attributeTwo;
+	}
+
+	/** attributeThree get、set方法**/
+	@Column(name = "ATTRIBUTE_THREE", length = 100, nullable = true)
+	public String getAttributeThree(){
+		return attributeThree;
+	}
+	public void setAttributeThree(String attributeThree){
+		this.attributeThree = attributeThree != null ? attributeThree.trim() : attributeThree;
 	}
 
 

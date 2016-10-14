@@ -12,10 +12,10 @@ import javax.persistence.Table;
  * TCoreRoleModuleFunction entity.
  * @Description 角色资源权限表
  * @author liujunyi
- * @date 2016-09-20 11:39
+ * @date 2016-10-13 10:48
  */
 @Entity
-@Table(name="T_CORE_ROLE_MODULE_FUNCTION")
+@Table(name="t_core_role_module_function")
 public class TCoreRoleModuleFunction implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

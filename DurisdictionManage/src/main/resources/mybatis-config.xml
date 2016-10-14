@@ -6,11 +6,14 @@
     <typeAliases>
        <typeAlias type="pers.liujunyi.tally.entity.TCoreUser" alias="CoreUser"/>
        <typeAlias type="pers.liujunyi.tally.entity.TCoreAttachment" alias="CoreAttachment"/>
+       <typeAlias type="pers.liujunyi.tally.entity.TCoreDictionary" alias="CoreDictionary"/>
+       
     </typeAliases>
     
     <!-- mapper 文件路径配置 -->  
     <mappers>  
         <mapper resource="sqlMapperXml/UserMapper.xml" />  
         <mapper resource="sqlMapperXml/AttachmentMapper.xml" />  
+        <mapper resource="sqlMapperXml/DictionaryMapper.xml" />  
     </mappers>  
 </configuration>  

@@ -46,7 +46,7 @@ import org.openxmlformats.schemas.presentationml.x2006.main.*;
  */
 public class PPTParseUtil {
 	
-	private static final Logger LOGGER = Logger.getLogger(ControllerUitl.class);
+	private static final Logger LOGGER = Logger.getLogger(ControllerUtil.class);
 	
 	/**
      * 将上传的PPT文件转为图片
