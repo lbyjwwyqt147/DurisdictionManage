@@ -1,10 +1,12 @@
 package pers.liujunyi.tally.controller;
 
+import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import javax.enterprise.inject.New;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import pers.liujunyi.tally.entity.TCoreDictionary;
 import pers.liujunyi.tally.service.ICoreDictionaryService;
@@ -98,11 +106,14 @@ public class DictionaryController {
 	 */
 	@RequestMapping(value="checkDictWord")
 	@ResponseBody
-	public boolean checkDictWord(String parentCode,String dictWord,HttpServletRequest request,HttpServletResponse response){
+	public boolean checkDictWord(String parentCode,String dictWord,String oldDictWord,HttpServletRequest request,HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin","*");
 		AtomicBoolean success =  new AtomicBoolean(false);
 		try {
-			String temp = dictService.getDictWordValue(parentCode, dictWord);
+			String temp = null;
+			if(oldDictWord != null && !oldDictWord.equals(dictWord)){
+				temp = dictService.getDictWordValue(parentCode, dictWord);
+			}
 			if(temp != null && !temp.trim().equals("")){
 				success.set(false);
 			}else{
@@ -123,11 +134,14 @@ public class DictionaryController {
 	 */
 	@RequestMapping(value="checkDictEntityAndFieldName")
 	@ResponseBody
-	public boolean checkDictEntityAndFieldName(String entityName,String fieldName,HttpServletRequest request,HttpServletResponse response){
+	public boolean checkDictEntityAndFieldName(String entityName,String fieldName,String oldEntityName,String oldFieldName,HttpServletRequest request,HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin","*");
 		AtomicBoolean success =  new AtomicBoolean(false);
 		try {
-			String temp = dictService.getDictEntityAndFieldName(entityName, fieldName);
+			String temp = null;
+			if(!entityName.equals(oldEntityName) && !fieldName.equals(oldFieldName)){
+				temp = dictService.getDictEntityAndFieldName(entityName, fieldName);
+			}
 			if(temp != null && !temp.trim().equals("")){
 				success.set(false);
 			}else{
@@ -246,25 +260,116 @@ public class DictionaryController {
 	}
 	
 	/**
+	 * 字典集合列表
+	 * @param pid     父级编号
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping(value="dictList")
+    public void dictList(String pid,HttpServletRequest request,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin","*");
+		String resultString = "{\"rows\":[],\"total\":1}";
+		CopyOnWriteArrayList<ConcurrentMap<String, Object>> resultList =  new CopyOnWriteArrayList<ConcurrentMap<String, Object>>();
+		try {
+			ConcurrentMap<String, Object> params = ControllerUtil.getFormData(request);
+			//每页显示纪录条数
+			Integer limit = Integer.valueOf(params.get("pageSize") != null ? params.get("pageSize").toString().trim() : "10");
+			//页码
+			Integer offset = Integer.valueOf(params.get("pageNumber") != null ? params.get("pageNumber").toString().trim() : "1");
+			String[] strings = null;
+			CopyOnWriteArrayList<TCoreDictionary> list = dictService.findChlidsDictList(pid,offset,limit);
+    		if(list != null && !list.isEmpty()){
+    			Iterator<?> iterator = list.iterator();
+    			while(iterator.hasNext()){
+    				TCoreDictionary dictionary = (TCoreDictionary) iterator.next();
+    				ConcurrentMap<String, Object> map = ControllerUtil.objectToMap(dictionary, strings);
+    				//父级名称
+    				String parentText =  dictService.getDictName(dictionary.getDictCode()); 
+    				map.put("parentText", parentText);
+    				//字典状态转换
+    				map.put("stateText", dictionary.getIsActivate().trim().equals("1001")?"激活" :"锁定");
+    				resultList.add(map);
+    			}
+    		}
+			//计算总纪录数
+    		params.put("parentCode", pid);
+    		Long totalLong =  dictService.getInfoCount(params);
+    		resultString = "{\"total\":"+totalLong+",\"rows\":"+new Gson().toJson(resultList)+"}";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ControllerUtil.writeJsonJavaScript(response, resultString);
+    }
+	
+	/**
 	 * 字典树
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(value="dictTree")
 	public void dictTree(HttpServletRequest request,HttpServletResponse response){
+		response.setHeader("Access-Control-Allow-Origin","*");
 		try {
 			//获取参数
 			ConcurrentMap<String, Object> params =  ControllerUtil.getFormData(request);
 			//节点编号
 			String nid = params.get("nid").toString();
 			String ztreeJson = dictService.zTreeJson(nid, params, request, null);
-			System.out.println(new Gson().toJson(ztreeJson));
-			ControllerUtil.writeJsonJavaScript(response, ztreeJson);
+			if(nid.trim().equals("0")){
+				JsonArray allTree = this.zTreeList(ztreeJson,request,"");
+				ControllerUtil.writeJsonJavaScript(response, allTree.toString());
+			}else{
+				ControllerUtil.writeJsonJavaScript(response, ztreeJson);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Ztree文件树处理
+	 * 
+	 * @param treeJson
+	 * @return
+	 */
+	private JsonArray zTreeList(String treeJson,HttpServletRequest request, String... strs) {
+		ConcurrentMap<String, Object> params =  new ConcurrentHashMap<String, Object>();
+		JsonParser parser = new JsonParser();
+		//通过JsonParser对象可以把json格式的字符串解析成一个JsonElement对象
+		JsonElement el = parser.parse(treeJson);
+		JsonArray result = new JsonArray();
+		if(el.isJsonArray()){
+			JsonArray jsonArray =  el.getAsJsonArray();
+			Iterator<?> it = jsonArray.iterator();
+			while(it.hasNext()){
+				 JsonObject obj = (JsonObject) it.next();
+				//根据key取值
+			     String pid = obj.get("id").getAsString();
+			     if(pid.trim().equals(Constants.PAERNT)){
+			    	 //获取子节点
+				     String child =  dictService.zTreeJson(pid, params, request, null);
+				     obj.add("children", parser.parse(child));
+			     }
+			     result.add(obj);
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * 字典下拉框
+	 * @param entityName  实体名称
+	 * @param fieldName   字段名称
+	 * @param request  
+	 * @param response
+	 */
+	public void dictComboxList(String entityName,String fieldName,String isEmpty,HttpServletRequest request,HttpServletResponse response){
+		try {
+			ControllerUtil.writeJsonJavaScript(response, dictService.dictChlidsJson(entityName, fieldName, isEmpty));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 }

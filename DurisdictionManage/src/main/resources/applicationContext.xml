@@ -134,6 +134,9 @@
         </aop:aspect>  
     </aop:config>
     
+    <aop:aspectj-autoproxy proxy-target-class="true"/>  
+    <bean class="pers.liujunyi.tally.aop.LogAspect" />  
+    
     <!-- Spring整合mybatis -->
    <bean id="lazySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 	    <property name="dataSource" ref="dataSource"/>  

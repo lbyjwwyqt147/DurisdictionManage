@@ -40,12 +40,21 @@
       <if test="parentCode != null and parentCode != '' ">
          and parent_code = #{parentCode,jdbcType=VARCHAR}
       </if>
-      
+      <if test="offset != null and limit != null ">
+        limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+      </if>
   </select>
   
   <!-- 获取纪录条数 -->
   <select id="getInfoCount" resultType="java.lang.Long">
-     select count(id) from t_core_dictionary limit 0,5
+     select count(id) from t_core_dictionary where 1 = 1  
+     <if test="parentCode != null and parentCode != '' ">
+          and parent_code = #{parentCode,jdbcType=VARCHAR}
+     </if>
+     <if test="parentCode == null">
+          limit 0,5
+     </if>
+     
   </select>
   
   <!-- 根据字典编号获取字典详细信息 -->
@@ -53,6 +62,7 @@
       select 
       <include refid="Base_Column_List"></include>
       from t_core_dictionary where dict_code = #{dictCode,jdbcType=VARCHAR}
+   
   </select>
   
   <!-- 根据主键ID获取字典详细信息 -->
@@ -73,20 +83,32 @@
   </select>
   
   <!-- 根据字典关联实体名称、字段名称、字典代码 获取字典名称 -->
-  <select id="getDictNameValue" resultType="java.lang.String" parameterType="java.util.concurrent.ConcurrentMap">
+  <select id="getDictNameValue" resultType="java.lang.String">
       select dict_name from t_core_dictionary 
       <where>
-          entity_name = #{entityName,jdbcType=VARCHAR}
+        <!--   entity_name = #{entityName,jdbcType=VARCHAR}
           and
           entity_field_name = #{entityFieldName,jdbcType=VARCHAR}
-          and 
+          and  -->
           dict_word = #{dictWord,jdbcType=VARCHAR}
+          and 
+          parent_code = #{parentCode,jdbcType=VARCHAR}
+          and 
+          is_activate = '1001'
+      </where>
+  </select>
+  
+  <!-- 根据编号获取字典名称 -->
+  <select id="getDictName" resultType="java.lang.String">
+     select dict_name from t_core_dictionary 
+      <where>
+          dict_Code = #{dictCode,jdbcType=VARCHAR}
       </where>
   </select>
   
   <!-- 查询全表中字典关联实体和字段是否存在 -->
-  <select id="getDictEntityAndFieldName">
-      select entity_name from t_core_dictionary where entity_name = #{entityName,jdbcType=VARCHAR} and entity_field_name = #{fieldName,jdbcType=VARCHAR}
+  <select id="getDictEntityAndFieldName" resultType="java.lang.String">
+      select dict_Code from t_core_dictionary where entity_name = #{entityName,jdbcType=VARCHAR} and entity_field_name = #{fieldName,jdbcType=VARCHAR}
   </select>
   
   <!-- 更新字典状态 -->

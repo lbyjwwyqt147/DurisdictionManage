@@ -39,7 +39,8 @@ public interface ICoreDictionaryMapper {
      * @param parentCode 父级编号
      * @return 返回父级的下级业务字典集合
      */
-    public CopyOnWriteArrayList<TCoreDictionary> findChlidsDictList(@Param("parentCode")String parentCode);
+    public CopyOnWriteArrayList<TCoreDictionary> findChlidsDictList(@Param("parentCode")String parentCode,@Param("offset")Integer offset,@Param("limit")Integer limit);
+    
     
     /**
      * 获取纪录条数
@@ -53,6 +54,13 @@ public interface ICoreDictionaryMapper {
      * @return 返回业务字典信息
      */
     public TCoreDictionary getDictInfo(@Param("dictCode")String dictCode);
+    
+    /**
+     * 根据编号获取字典名称
+     * @param dictCode 字典编号
+     * @return 返回字典名称
+     */
+    public String getDictName(@Param("dictCode")String dictCode);
     
     /**
      * 根据主键ID获取字典详细信息
@@ -80,16 +88,21 @@ public interface ICoreDictionaryMapper {
      * 查询全表中字典关联实体和字段是否存在
      * @param entityName  实体名称
      * @param fieldName   字段名称
-     * @return 返回关联实体名称
+     * @return 返回字典编号
      */
     public String getDictEntityAndFieldName(@Param("entityName")String entityName,@Param("fieldName")String fieldName);
     
-    /**
-     * 根据字典关联实体名称、字段名称、字典代码 获取字典名称
-     * @param paramsMap 参数Map
-     * @return 返回字典名称
-     */
-    public String getDictNameValue(ConcurrentMap<String,Object> paramsMap);
+   /**
+    * 根据字典关联实体名称、字段名称、字典代码 获取字典名称
+    * @param entityName          实体名称
+    * @param entityFieldName     字段名称
+    * @param parentCode          当前字典父级编号 
+    * @param dictWord            字典代码
+    * @return 返回字典名称
+    */
+    public String getDictNameValue(@Param("entityName")String entityName ,@Param("entityFieldName")String entityFieldName,@Param("parentCode")String parentCode,@Param("dictWord")String dictWord );
+    
+    
     
     /**
      * 删除业务字典

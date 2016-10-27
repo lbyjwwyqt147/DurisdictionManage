@@ -3,6 +3,18 @@
  * @type 
  */
 var zTreeUtil = {
+	zTree : "",
+	/**
+	 * 刷新选中的树节点
+	 * @param {} treeNode
+	 */
+	refreshTree : function(treeNode){
+		var nodes = zTreeUtil.zTree.getSelectedNodes();
+		if (nodes.length>0) {
+			zTreeUtil.zTree.reAsyncChildNodes(nodes[0], "refresh");
+		}
+	},
+	
     /**
      * 创建树
      * @param {} params
@@ -312,7 +324,6 @@ var zTreeUtil = {
 	    	    type:'POST',
 		        dataType:'json',
 		        success : function(data){
-		        	console.log(data);
 		    	  var dataTree = data;
 		    	  $.fn.zTree.init($("#"+zTreeWidgetId), ztTreeSetting, dataTree);
 		    	  setTimeout(function(){
@@ -322,6 +333,8 @@ var zTreeUtil = {
 				  },200);
 	    	    }
 		});
+		
+		zTreeUtil.zTree = $.fn.zTree.getZTreeObj(zTreeWidgetId);
 		
 	}
 	

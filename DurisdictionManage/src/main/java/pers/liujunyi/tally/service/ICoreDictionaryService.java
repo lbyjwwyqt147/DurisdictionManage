@@ -8,7 +8,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 
+
+
+
+
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.annotations.Param;
 
 import pers.liujunyi.tally.entity.TCoreDictionary;
 
@@ -60,7 +67,16 @@ public interface ICoreDictionaryService {
      * @param parentCode 父级编号
      * @return 返回父级的下级业务字典集合
      */
-    public CopyOnWriteArrayList<TCoreDictionary> findChlidsDictList(String parentCode);
+    public CopyOnWriteArrayList<TCoreDictionary> findChlidsDictList(String parentCode,Integer offset,Integer limit);
+    
+    /**
+     * 获取下拉框需要的json数据
+     * @param entityName    实体名称
+     * @param fieldName     字段名称
+     * @param isEmpty       true:表示显示‘请选择’ false 表示不显示
+     * @return json数据
+     */
+    public String dictChlidsJson(String entityName,String fieldName,String isEmpty);
     
     /**
      * 获取纪录条数
@@ -74,6 +90,13 @@ public interface ICoreDictionaryService {
      * @return 返回业务字典信息
      */
     public TCoreDictionary getDictInfo(String dictCode);
+    
+    /**
+     * 根据编号获取字典名称
+     * @param dictCode 字典编号
+     * @return 返回字典名称
+     */
+    public String getDictName(@Param("dictCode")String dictCode);
     
     /**
      * 根据主键ID获取字典详细信息
@@ -115,10 +138,13 @@ public interface ICoreDictionaryService {
     
     /**
      * 根据字典关联实体名称、字段名称、字典代码 获取字典名称
-     * @param paramsMap 参数Map
+     * @param entityName          实体名称
+     * @param entityFieldName     字段名称
+     * @param parentCode          当前字典父级编号 
+     * @param dictWord            字典代码
      * @return 返回字典名称
      */
-    public String getDictNameValue(ConcurrentMap<String,Object> paramsMap);
+    public String getDictNameValue(String entityName,String entityFieldName,String parentCode,String dictWord);
     
     /**
      * 删除业务字典

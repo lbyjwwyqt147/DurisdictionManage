@@ -26,6 +26,10 @@
 <!-- metronic 需要的JS结束  -->
 
 
+<!-- 提示框 -->
+<script src="${pageContext.request.contextPath}/resources/assets/global/plugins/layui/layui.js" type="text/javascript"></script>
+
+
 <!-- 自定义JS部分 开始 -->
 <script src="${pageContext.request.contextPath}/resources/pages/scripts/tally_common.js" type="text/javascript"></script>
 <!-- 自定义JS部分 结束 -->

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pers.liujunyi.tally.mapper.TCoreLogsMapper" >
+  <resultMap id="BaseResultMap" type="pers.liujunyi.tally.entity.TCoreLogs" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="log_content" property="logContent" jdbcType="VARCHAR" />
+    <result column="log_module" property="logModule" jdbcType="VARCHAR" />
+    <result column="log_operation" property="logOperation" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+    <result column="log_type" property="logType" jdbcType="VARCHAR" />
+    <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+    <result column="table_code" property="tableCode" jdbcType="VARCHAR" />
+    <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+    <result column="attribute_one" property="attributeOne" jdbcType="VARCHAR" />
+    <result column="attribute_two" property="attributeTwo" jdbcType="VARCHAR" />
+    <result column="attribute_three" property="attributeThree" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, log_content, log_module, log_operation, create_date, log_type, login_ip, 
+    table_code, table_name, attribute_one, attribute_two, attribute_three
+  </sql>
+ 
+  <!-- 新增信息 -->
+  <insert id="addLogs" parameterType="pers.liujunyi.tally.entity.TCoreLogs" >
+    insert into t_core_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="logContent != null" >
+        log_content,
+      </if>
+      <if test="logModule != null" >
+        log_module,
+      </if>
+      <if test="logOperation != null" >
+        log_operation,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="logType != null" >
+        log_type,
+      </if>
+      <if test="loginIp != null" >
+        login_ip,
+      </if>
+      <if test="tableCode != null" >
+        table_code,
+      </if>
+      <if test="tableName != null" >
+        table_name,
+      </if>
+      <if test="attributeOne != null" >
+        attribute_one,
+      </if>
+      <if test="attributeTwo != null" >
+        attribute_two,
+      </if>
+      <if test="attributeThree != null" >
+        attribute_three,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null" >
+        #{logContent,jdbcType=VARCHAR},
+      </if>
+      <if test="logModule != null" >
+        #{logModule,jdbcType=VARCHAR},
+      </if>
+      <if test="logOperation != null" >
+        #{logOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null" >
+        #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCode != null" >
+        #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeOne != null" >
+        #{attributeOne,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeTwo != null" >
+        #{attributeTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeThree != null" >
+        #{attributeThree,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 更新信息 -->
+  <update id="updateLogs" parameterType="pers.liujunyi.tally.entity.TCoreLogs" >
+    update t_core_logs
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="logContent != null" >
+        log_content = #{logContent,jdbcType=VARCHAR},
+      </if>
+      <if test="logModule != null" >
+        log_module = #{logModule,jdbcType=VARCHAR},
+      </if>
+      <if test="logOperation != null" >
+        log_operation = #{logOperation,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="logType != null" >
+        log_type = #{logType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginIp != null" >
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="tableCode != null" >
+        table_code = #{tableCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tableName != null" >
+        table_name = #{tableName,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeOne != null" >
+        attribute_one = #{attributeOne,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeTwo != null" >
+        attribute_two = #{attributeTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="attributeThree != null" >
+        attribute_three = #{attributeThree,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 删除信息 -->
+  <delete id="deleteLogs">
+     delete from t_core_logs where id in
+     <foreach collection="array" item="item" open="(" separator="," close=")">
+        ${item,jdbcType=VARCHAR}
+     </foreach>
+  </delete>
+  
+</mapper>

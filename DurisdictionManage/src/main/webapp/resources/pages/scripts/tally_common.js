@@ -5,6 +5,31 @@
 var commonUtil = {
     
 	/**
+	 * 清空文本框前后空格
+	 */
+	inputTrim : function(){
+	   $("input").each(function(){
+	      $(this).val($.trim($(this).val()))
+	   });
+	   $("textarea").each(function(){
+	      $(this).val($.trim($(this).val()))
+	   });
+	},
+	/**
+	 * 重置带icon图标的验证表单
+	 * @param {} formId
+	 * @param {} className
+	 */
+	resetIconForm : function(formId,className){
+	   $(formId+" .form-group").removeClass("has-success");
+       $(formId+" .form-group").removeClass("has-error");
+       $(formId+" input").removeAttr("aria-describedby");
+       $(formId+" input").removeAttr("aria-invalid");
+	   $(formId+" div .input-icon i").removeClass("fa-warning");
+	   $(formId+" div .input-icon i").removeClass("fa-check");
+	},
+	
+	/**
 	 * 日期时间处理工具
 	 */
 	 dateUtil : {
@@ -103,5 +128,9 @@ var commonUtil = {
 };
 
 $(function(){
-   
+   layui.use(['layer', 'form'], function(){
+	  var layer = layui.layer
+	  ,form = layui.form();
+	  
+	});
 });

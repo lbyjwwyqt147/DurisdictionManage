@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import pers.liujunyi.tally.entity.TCoreDictionary;
 import pers.liujunyi.tally.mapper.ICoreDictionaryMapper;
 import pers.liujunyi.tally.service.ICoreDictionaryService;
@@ -47,6 +49,7 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 	     int result = 0;
          try {
 	    	if(task.equals(Constants.ADD)){
+	    		dict.setCreateUser("aa");
 	    		dict.setDictCode(this.settingNewDictCodeValue(dict.getParentCode()));
 	    		dict.setCreateTime(DateTimeUtil.getCurrentDateTime());
 	        	result = dictMapper.addDict(dict);
@@ -72,7 +75,7 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 		try {
 			StringBuffer ztreBuffer = new StringBuffer("[");
 			//获取所有下级信息
-			CopyOnWriteArrayList<TCoreDictionary> dictList = dictMapper.findChlidsDictList(parentCode);
+			CopyOnWriteArrayList<TCoreDictionary> dictList = dictMapper.findChlidsDictList(parentCode,null,null);
 			if(dictList != null && !dictList.isEmpty()){
 				int i = 0;
 				Iterator<?> iterator = dictList.iterator();
@@ -88,13 +91,14 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 					String nocheck = paramsMap.get("nocheck") != null && !paramsMap.get("nocheck").toString().trim().equals("") ? paramsMap.get("nocheck").toString().trim() :"false";
 					String checked = paramsMap.get("checked") != null && !paramsMap.get("checked").toString().trim().equals("") ? paramsMap.get("checked").toString().trim() :"false";
 					String iconSkin = paramsMap.get("iconSkin") != null && !paramsMap.get("iconSkin").toString().trim().equals("") ? paramsMap.get("iconSkin").toString().trim() :"";
-					String icon = paramsMap.get("icon") != null && !paramsMap.get("icon").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("icon").toString().trim() :request.getContextPath()+"resources/pages/images/icon/award_star_gold_3.png";;
-					String iconOpen = paramsMap.get("iconOpen") != null && !paramsMap.get("iconOpen").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("iconOpen").toString().trim() :request.getContextPath()+"resources/pages/images/icon/award_star_gold_2.png";;
-					String iconClose = paramsMap.get("iconClose") != null && !paramsMap.get("iconClose").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("iconClose").toString().trim() :request.getContextPath()+"resources/pages/images/icon/award_star_gold_1.png";;
+					String icon = paramsMap.get("icon") != null && !paramsMap.get("icon").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("icon").toString().trim() :request.getContextPath()+"/resources/pages/images/icon/award_star_gold_1.png";;
+					String iconOpen = paramsMap.get("iconOpen") != null && !paramsMap.get("iconOpen").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("iconOpen").toString().trim() :request.getContextPath()+"/resources/pages/images/icon/award_star_gold_2.png";;
+					String iconClose = paramsMap.get("iconClose") != null && !paramsMap.get("iconClose").toString().trim().equals("") ? request.getContextPath()+paramsMap.get("iconClose").toString().trim() :request.getContextPath()+"/resources/pages/images/icon/award_star_gold_3.png";;
 					String isHidden = paramsMap.get("isParent") != null && !paramsMap.get("isParent").toString().trim().equals("") ? paramsMap.get("isParent").toString().trim() :"false";
 					
 					if(dictionary.getIsParent().trim().equals("1")){
 						isParent = "true";
+						open = "true";
 					}
 					
 					ztreBuffer.append(serviceUtil.getZTreeItemJSON(treeId, treePid, treeText,open, checked,treeTitle,"",isParent,"",icon,iconOpen,iconClose, isHidden, nocheck,iconSkin,request, str));
@@ -103,10 +107,10 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 					if (i < dictList.size()) {
 						ztreBuffer.append(",");
 					}
-					i++;
+				
 				}
-				ztreBuffer.append("]");
 			}
+			ztreBuffer.append("]");
 			return ztreBuffer.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -127,8 +131,8 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 
 	@Override
 	public CopyOnWriteArrayList<TCoreDictionary> findChlidsDictList(
-			String parentCode) {
-		return dictMapper.findChlidsDictList(parentCode);
+			String parentCode,Integer offset,Integer limit) {
+		return dictMapper.findChlidsDictList(parentCode,offset,limit);
 	}
 
 	@Override
@@ -157,8 +161,10 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 	}
 
 	@Override
-	public String getDictNameValue(ConcurrentMap<String, Object> paramsMap) {
-		return dictMapper.getDictNameValue(paramsMap);
+	public String getDictNameValue(String entityName,String entityFieldName,String parentCode,String dictWord) {
+		String pid = dictMapper.getDictEntityAndFieldName(entityName, entityFieldName);
+		String dictNameString = dictMapper.getDictNameValue(entityName, entityFieldName,pid, dictWord);
+		return dictNameString != null ? dictNameString : "";
 	}
 
 	@Override
@@ -195,21 +201,7 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 		String newDictCode = null;
 		try {
 			String historyDictCode = dictMapper.getMaxDictCodeValue(parentCode);
-			if(historyDictCode != null && !parentCode.trim().equals(Constants.PAERNT)){
-				//获取最后四位值
-				AtomicInteger lastFour = new AtomicInteger(Integer.valueOf(historyDictCode.substring(historyDictCode.length()-4)));
-				//对数据进行+1计算
-				newDictCode = historyDictCode+lastFour.addAndGet(1);
-			}else if(historyDictCode == null && !parentCode.trim().equals(Constants.PAERNT)){
-				newDictCode = parentCode+"1001";
-			}else if(historyDictCode != null && parentCode.trim().equals(Constants.PAERNT)){
-				//获取最后四位值
-				AtomicInteger lastFour = new AtomicInteger(Integer.valueOf(historyDictCode.substring(historyDictCode.length()-4)));
-				//对数据进行+1计算
-				newDictCode = String.valueOf(lastFour.addAndGet(1));
-			}else if(historyDictCode == null && parentCode.trim().equals(Constants.PAERNT)){
-				newDictCode = "1001";
-			}
+			newDictCode = serviceUtil.getNewCode(historyDictCode, parentCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -219,6 +211,41 @@ public class CoreDictionaryServiceImpl implements ICoreDictionaryService {
 	@Override
 	public Long getInfoCount(ConcurrentMap<String, Object> paramsMap) {
 		return dictMapper.getInfoCount(paramsMap);
+	}
+
+	@Override
+	public String getDictName(String dictCode) {
+		String dictNameString = dictMapper.getDictName(dictCode);
+		return dictNameString != null ? dictNameString : "";
+	}
+
+	@Override
+	public String dictChlidsJson(String entityName, String fieldName,String isEmpty) {
+		String json = "[]";
+		try {
+		    String pid = dictMapper.getDictEntityAndFieldName(entityName, fieldName);
+			CopyOnWriteArrayList<ConcurrentMap<String, Object>> results = new CopyOnWriteArrayList<ConcurrentMap<String, Object>>();
+			if("true".equals(isEmpty)){
+				ConcurrentMap<String, Object>  map = new ConcurrentHashMap<String, Object>();
+				map.put("id", "");
+				map.put("text", "- 请选择 -");
+				results.add(map);
+			}
+			CopyOnWriteArrayList<TCoreDictionary> list = dictMapper.findChlidsDictList(pid,null,null);
+			if (list != null && list.size() > 0) {
+				for(TCoreDictionary dict : list){
+				    // 循环赋值
+					ConcurrentMap<String, Object> map = new ConcurrentHashMap<String, Object>();
+					map.put("id", dict.getDictWord());
+					map.put("text", dict.getDictName());
+					results.add(map);
+				}
+			}
+			json = new Gson().toJson(results);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return json;
 	}
 
 }

@@ -13,3 +13,6 @@
 <link href="${pageContext.request.contextPath}/resources/assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
 
 <!-- metronic 需要的CSS 结束 -->
+
+<!-- 提示框 -->
+<link href="${pageContext.request.contextPath}/resources/assets/global/plugins/layui/css/layui.css" rel="stylesheet" type="text/css" />

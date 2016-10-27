@@ -39,4 +39,12 @@ public interface IServiceUtil {
 	public  String getZTreeItemJSON(String id,String pid,String name,String open,String checked,
 			String title,String url,String isParent,String target,String icon,String iconOpen,String iconClose,
 			String isHidden,String nocheck,String iconSkin,HttpServletRequest request,String... str);
+	
+	/**
+	 * 获取最新编号
+	 * @param historyDictCode    历史最大编号
+	 * @param parentCode         当前字典编号
+	 * @return
+	 */
+	public String getNewCode(String historyDictCode,String parentCode);
 }

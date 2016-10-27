@@ -1,10 +1,13 @@
 package pers.liujunyi.tally.util.impl;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import pers.liujunyi.tally.util.Constants;
 import pers.liujunyi.tally.util.IServiceUtil;
 
 /***
@@ -43,6 +46,32 @@ public class ServiceUtilImpl implements IServiceUtil {
 				LOGGER.error("封装Ztree树结构出现异常.");
 			}
 			return null;
+	}
+
+	@Override
+	public String getNewCode(String historyDictCode,String parentCode) {
+		String newDictCode =  null;
+		try {
+			if(historyDictCode != null && !parentCode.trim().equals(Constants.PAERNT)){
+				//获取最后四位值
+				AtomicInteger lastFour = new AtomicInteger(Integer.valueOf(historyDictCode.substring(historyDictCode.length()-4)));
+				//对数据进行+1计算
+				newDictCode = historyDictCode.substring(0,historyDictCode.length()-4)+lastFour.addAndGet(1);
+			}else if(historyDictCode == null && !parentCode.trim().equals(Constants.PAERNT)){
+				newDictCode = parentCode+"1001";
+			}else if(historyDictCode != null && parentCode.trim().equals(Constants.PAERNT)){
+				//获取最后四位值
+				AtomicInteger lastFour = new AtomicInteger(Integer.valueOf(historyDictCode.substring(historyDictCode.length()-4)));
+				//对数据进行+1计算
+				newDictCode = String.valueOf(lastFour.addAndGet(1));
+			}else if(historyDictCode == null && parentCode.trim().equals(Constants.PAERNT)){
+				newDictCode = "1001";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.error("获取最新编号出现异常.");
+		}
+		return newDictCode;
 	}
 
 }

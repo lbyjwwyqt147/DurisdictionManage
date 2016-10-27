@@ -20,8 +20,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
 	<jsp:include page="/WEB-INF/pages/commons/head.jsp"></jsp:include>
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/datatables/datatables.min.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css">  
+	<link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/bootstrap-table/bootstrap-table.css">
+	
+<%--     <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/datatables/datatables.min.css">
+ --%>    
+<%--     <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css">  
+ --%>    
+    
     <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/pages/css/tally_common.css">
     <link rel="stylesheet" type="text/css" href="<%=basePath%>resources/assets/global/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css">
     
@@ -40,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <div class="row" style="margin-top: 20px;">
           <!-- 字典树 div 开始 -->
-         <div class="col-md-3" style="padding-right: 0px;">
+         <div class="col-md-2" style="padding-right: 0px;">
              <div class="portlet box green" style="padding-left: 0px;padding-right: 0px;">
                  <div class="portlet-title">
                      <div class="caption">
@@ -48,12 +53,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                               字典结构
                      </div>
                      <div class="tools">
-                         <a href="" class="reload" data-original-title="" title=""> </a>
+                         <a href="" class="reload" data-original-title="" id="reloadTree" title=""> </a>
                      </div>
                  </div>
-                 <div class="portlet-body">
+                 <div class="portlet-body contentdiv">
                      <div class="row">
-                         <div class="col-md-12">
+                         <div class="col-md-12" style="padding-left: 0">
                                <!-- 字典树 -->
                                <div id="dictTree" class="ztree"></div>
                          </div>    
@@ -64,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <!-- 字典树 div 结束 -->
          
          <!-- 字典数据列表 div 开始 -->
-         <div class="col-md-5"  style="padding-left: 0px;padding-right: 0px;">
+         <div class="col-md-6"  style="padding-left: 0px;padding-right: 0px;">
              <div class="portlet box green"  style="padding-left: 0px;padding-right: 0px;border-left: 0px !important;border-right: 0px !important;">
                  <div class="portlet-title">
                      <div class="caption">
@@ -72,13 +77,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                               字典数据列表
                      </div>
                      <div class="tools">
-                         <a href="" class="reload" data-original-title="" title=""> </a>
+                         <a href="" class="reload" data-original-title="" id="reloadTabel" title=""> </a>
                      </div>
                  </div>
-                 <div class="portlet-body">
+                 <div class="portlet-body contentdiv">
                      <div class="row">
                          <div class="col-md-12">
+                        <!--  <div class="fixed-table-toolbar">
+                              <div class="bs-bars pull-left"><div id="toolbar">
+						        <button id="remove" class="btn btn-danger" disabled="">
+						            <i class="glyphicon glyphicon-remove"></i> Delete
+						        </button>
+                              </div>
+                         </div> -->
                              <!-- 字典数据列表 -->
+                            <table id="dictDataGrid" class="table table-striped"></table>
+                             
+                             
                          </div>
                      </div>
                  </div>
@@ -87,15 +102,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <!-- 字典数据列表 div 结束 -->
     
          <!-- 字典表单 div 开始 -->
-         <div class="col-md-4" style="padding-left: 0px;">
-             <div class="portlet box green" style="padding-left: 0px;padding-right: 0px;">
+         <div class="col-md-4 " style="padding-left: 0px;">
+             <div class="portlet box green " style="padding-left: 0px;padding-right: 0px;">
                  <div class="portlet-title">
                      <div class="caption">
                          <i class="fa fa-building-o"></i>
                                                                字典表单
                      </div>
                  </div>
-                 <div class="portlet-body">
+                 <div class="portlet-body contentdiv">
                      <div class="row">
                          <div class="col-md-12">
                             <form action="" id="dict-form" class="form-horizontal" >
@@ -127,8 +142,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                          <div class="col-md-8">
                                              <div class="input-icon right">
                                                  <i class="fa " data-original-title="请选择所属上级."></i>
-                                                 <input type="text" class="form-control" name="parentText" id="parentText"> </div>
+                                                 <input type="text" class="form-control" name="parentText" readonly="readonly" id="parentText"> </div>
                                                  <input type="hidden" name="parentCode" id="parentCode">
+                                                 <input type="hidden" name="task" id="task" value="add">
+                                                 <input type="hidden" name="id" id="zid">
+                                                 <p id="codeValue" style="display: none;" />
                                          </div>
                                      </div>
                                      <div class="form-group">
@@ -174,17 +192,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                          </div>
                                      </div>
                                      <div class="form-group">
-                                         <label class="control-label col-md-3">是否有效
+                                         <label class="control-label col-md-3">字典状态
                                             
                                          </label>
                                          <div class="col-md-8">
                                              <div class="mt-radio-inline">
                                                   <label class="mt-radio">
-                                                      <input type="radio" name="isActivate" id="isActivate1" value="1001" checked="checked">是
+                                                      <input type="radio" name="isActivate" id="isActivate1" value="1001" checked="checked">激活
                                                       <span></span>
                                                   </label>
                                                   <label class="mt-radio">
-                                                      <input type="radio" name="isActivate" id="isActivate2" value="1002">否
+                                                      <input type="radio" name="isActivate" id="isActivate2" value="1002">锁定
                                                       <span></span>
                                                   </label>   
                                              </div>
@@ -192,11 +210,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                      </div>
                                      
                                  </div>
-                                 <div class="form-actions">
+                                 <div class="form-actions fluid">
                                      <div class="row">
                                          <div class="col-md-offset-3 col-md-9">
-                                             <button type="submit" class="btn green"> <i class="fa fa-check"></i>保存</button>
-                                             <button type="button" class="btn default"><i class="fa fa-circle-o-notch"></i>清空</button>
+                                             <button type="button" id="dictSaveBtn" class="btn green"> <i class="fa fa-check"></i>保存</button>
+                                             <button type="button" id="dictResetBtn" class="btn default"><i class="fa fa-circle-o-notch"></i>清空</button>
                                          </div>
                                      </div>
                                  </div>
@@ -213,8 +231,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <jsp:include page="/WEB-INF/pages/commons/bottom.jsp"></jsp:include>    
     <script type="text/javascript" src="<%=basePath%>resources/assets/global/scripts/datatable.js"></script>
-    <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/datatables/datatables.min.js"></script>
-    <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"></script> 
+    <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/bootstrap-table/bootstrap-table.js"></script>
+    <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    
+    
+<%--     <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/datatables/datatables.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js"></script>  --%>
     <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/zTree_v3/js/jquery.ztree.core.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/zTree_v3/js/jquery.ztree.excheck.min.js"></script>
     <script type="text/javascript" src="<%=basePath%>resources/assets/global/plugins/zTree_v3/js/zTreeUtil.js"></script>
